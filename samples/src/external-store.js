@@ -10,41 +10,104 @@ function initialState() {
 // RxJs 用作 store
 console.log('<TEST>:')
 
-const idSub = new Rx.Subject()
-const idReducer = idSub.map(id => state => Object.assign({}, state, {
-    id
-}))
+function UserStore() {
+    const idSub = new Rx.Subject()
+    const idReducer = idSub.map(id => state => Object.assign({}, state, {
+        id
+    }))
 
-const countSub = new Rx.Subject()
-const countReducer = countSub.map(count => state => Object.assign({}, state, {
-    count
-}))
+    const countSub = new Rx.Subject()
+    const countReducer = countSub.map(count => state => Object.assign({}, state, {
+        count
+    }))
 
-const store = Rx.Observable
-    .merge(idReducer, countReducer)
-    .scan((state, reducer) => reducer(state), initialState())
-    .share()
+    const store = Rx.Observable
+        .merge(idReducer, countReducer)
+        .scan((state, reducer) => reducer(state), initialState())
+        .share()
 
-store.subscribe(val => {
-    console.log('next 1:', val)
-})
+    return {
+        store,
+        action: {
+            id: idSub,
+            count: countSub
+        }
+    }
+}
 
-idSub.next(1)
-// next 1: { id: 1, count: 0 }
+const userStore = UserStore()
 
-store.subscribe(val => {
-    console.log('next 2:', val)
-})
+class Component {
 
-countSub.next(2)
-// next 1: { id: 1, count: 2 }
-// next 2: { id: 1, count: 2 }
+    setState(state) {
+        this.state = state
+        this.render()
+    }
 
-store.subscribe(val => {
-    console.log('next 3:', val)
-})
+    componentWillMount() {}
+    componentWillUnmount() {}
+    render() {}
+}
 
-idSub.next(3)
-// next 1: { id: 3, count: 2 }
-// next 2: { id: 3, count: 2 }
-// next 3: { id: 3, count: 2 }
+class StoreComponent extends Component {
+
+    constructor() {
+        super()
+        this.componentWillMount()
+    }
+
+    componentWillMount() {
+        this.subscription = userStore.store.subscribe(state => {
+            this.setState(state)
+        })
+    }
+
+    componentWillUnmount() {
+        this.subscription.unsubscribe()
+    }
+
+}
+
+class Header extends StoreComponent {
+    render() {
+        console.log('<header />', this.state)
+    }
+}
+
+class Body extends StoreComponent {
+    render() {
+        console.log('<body   />', this.state)
+    }
+}
+
+class Footer extends StoreComponent {
+    render() {
+        console.log('<footer />', this.state)
+    }
+}
+
+class App extends Component {
+
+    render() {
+        let header = new Header()
+        userStore.action.id.next(1)
+
+        let body = new Body()
+        userStore.action.id.next(2)
+
+        let footer = new Footer()
+        userStore.action.count.next(3)
+
+
+        header.componentWillUnmount()
+        body.componentWillUnmount()
+
+        userStore.action.id.next(4)
+        footer.componentWillUnmount()
+
+        userStore.action.count.next(5)
+    }
+
+}
+
+new App().render()
