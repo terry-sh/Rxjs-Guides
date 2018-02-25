@@ -11,26 +11,45 @@ function initialState() {
 console.log('<TEST>:')
 
 function UserStore() {
-    const idSub = new Rx.Subject()
-    const idReducer = idSub.map(id => state => Object.assign({}, state, {
+
+    function readonly(value) {
+        return {
+            enumerable: true,
+            writable: false,
+            value
+        }
+    }
+
+    function createModule(reducer) {
+        const subject = new Rx.Subject()
+        const action = subject.map(reducer)
+
+        const emit = (payload) => subject.next(payload)
+        Object.defineProperties(emit, {
+            subject: readonly(subject),
+            action: readonly(action),
+        })
+
+        return emit
+    }
+
+    const id = createModule(id => state => Object.assign({}, state, {
         id
     }))
-
-    const countSub = new Rx.Subject()
-    const countReducer = countSub.map(count => state => Object.assign({}, state, {
+    const count = createModule(count => state => Object.assign({}, state, {
         count
     }))
 
     const store = Rx.Observable
-        .merge(idReducer, countReducer)
+        .merge(id.action, count.action)
         .scan((state, reducer) => reducer(state), initialState())
         .share()
 
     return {
         store,
         action: {
-            id: idSub,
-            count: countSub
+            id,
+            count
         }
     }
 }
@@ -90,22 +109,21 @@ class App extends Component {
 
     render() {
         let header = new Header()
-        userStore.action.id.next(1)
+        userStore.action.id(1)
 
         let body = new Body()
-        userStore.action.id.next(2)
+        userStore.action.id(2)
 
         let footer = new Footer()
-        userStore.action.count.next(3)
-
+        userStore.action.count(3)
 
         header.componentWillUnmount()
         body.componentWillUnmount()
 
-        userStore.action.id.next(4)
+        userStore.action.id(4)
         footer.componentWillUnmount()
 
-        userStore.action.count.next(5)
+        userStore.action.count(5)
     }
 
 }
