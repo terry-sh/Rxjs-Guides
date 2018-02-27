@@ -23,7 +23,12 @@ function createStore(initialState) {
 
 		next: patch => {
 			const state = store.getValue()
-			emit.next(Object.assign({}, state, patch(state)))
+			const $patch = patch(state)
+			if ($patch === undefined) {
+				return
+			} else {
+				emit.next(Object.assign({}, state, patch(state)))
+			}
 		}
 	}
 }
@@ -83,9 +88,11 @@ const getProvince = () => {
 			complete: () => {
 				console.log('<complete>')
 
-				store.next(state => ({
-					isLoading: false
-				}))
+				store.next(state => {
+					return state.isLoading ? {
+						isLoading: false
+					} : undefined
+				})
 			}
 		})
 }
