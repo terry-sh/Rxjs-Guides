@@ -1,9 +1,9 @@
 const Rx = require('rxjs')
 
-
 const o1 = i => {
 	console.log('<1>', i)
 }
+
 const o2 = i => {
 	console.log('<2>', i)
 }
