@@ -59,3 +59,17 @@ const obs3 = Rx.Observable.from(new Promise((resolve, reject) => {
 		console.log('<Promise> complete')
 	}
 )
+
+// iterator 作爲參數
+function *indexGenerator() {
+	let i = 0
+	while (true) {
+		yield ++i
+	}
+}
+
+const obs4 = Rx.Observable.from(indexGenerator()).take(4).subscribe(
+	i => { console.log('<Iterator>', i) },
+	err => {},
+	() => console.log('<Iterator> complete')
+)
