@@ -12,7 +12,14 @@ const o2 = i => {
 /**
  * @function
  * from
- * 将 array 或者 array-like 的对象转化成 event stream
+ * 将
+ *   - array
+ *   - array-like 的对象
+ *   - Promise
+ *   - iterator
+ *   - 可訂閱的對象
+ *   - Observable-like 的對象
+ * 转化成 event stream
  */
 
 
@@ -32,3 +39,23 @@ const obs2 = Rx.Observable.from({
 
 obs2.subscribe(o1)
 obs2.subscribe(o2)
+
+// `Promise` 作爲參數
+const obs3 = Rx.Observable.from(new Promise((resolve, reject) => {
+	const seed = Math.random()
+	if (seed > 0.5) {
+		resolve(seed)
+	} else {
+		reject(seed)
+	}
+})).subscribe(
+	seed => {
+		console.log('<Promise> success with ', seed)
+	},
+	seed => {
+		console.log('<Promise> failed with ', seed)
+	},
+	() => {
+		console.log('<Promise> complete')
+	}
+)
