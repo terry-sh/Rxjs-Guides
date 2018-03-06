@@ -1,16 +1,16 @@
 # Observable
 
-Observable 是 Rxjs 的核心，它主要數據流的產生及分發。
+Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 
 ## Operators（運算符）
 
 分類：
 
 - Creation Operators
-  * ajax
-  * bindCallback
-  * bindNodeCallback
-  * create
+  * ajax - 將 Ajax 請求轉化爲 Observable
+  * bindCallback - 將一個最後一個參數爲 callback 的函數一轉化爲一個產生 observable 的函數二，函數二的參數列表爲函數一除 callback 外的其它參數；
+  * bindNodeCallback - 特殊格式的 bindCallback
+  * create - 接收一個函數，生成一個 obsevable
   * defer
   * empty
   * from

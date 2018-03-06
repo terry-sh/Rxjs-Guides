@@ -17,8 +17,7 @@ const o2 = i => {
  *   - array-like 的对象
  *   - Promise
  *   - iterator
- *   - 可訂閱的對象
- *   - Observable-like 的對象
+ *   - 可訂閱的對象 / Observable 對象
  * 转化成 event stream
  */
 
@@ -61,7 +60,7 @@ const obs3 = Rx.Observable.from(new Promise((resolve, reject) => {
 )
 
 // iterator 作爲參數
-function *indexGenerator() {
+function* indexGenerator() {
 	let i = 0
 	while (true) {
 		yield ++i
@@ -69,7 +68,26 @@ function *indexGenerator() {
 }
 
 const obs4 = Rx.Observable.from(indexGenerator()).take(4).subscribe(
-	i => { console.log('<Iterator>', i) },
+	i => {
+		console.log('<Iterator>', i)
+	},
 	err => {},
 	() => console.log('<Iterator> complete')
 )
+
+// form Observable 對象
+const obs5 = Rx.Observable.from(Rx.Observable.create(function(observer) {
+	observer.next(1)
+	observer.next(2)
+	observer.complete()
+})).subscribe({
+	next(val) {
+		console.log('<subscribable object> next', val)
+	},
+	complete() {
+		console.log('<subscribable object> complete')
+	},
+	error(err) {
+		//
+	}
+})
