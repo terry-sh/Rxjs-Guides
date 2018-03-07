@@ -25,7 +25,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * repeatWhen
   * range
   * throw
-  * timer
+  * timer - 第一個參數爲定時時間（即多久以後，或者某個時間點開始），如果第二個參數指定，則爲 interval；不指定則爲 timeout。
 
 - Transformation Operators
   * buffer
@@ -82,6 +82,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * takeWhile
   * throttle
   * throttleTime
+
 - Combination Operators
   * combineAll
   * combineLatest
