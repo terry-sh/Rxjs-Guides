@@ -6,7 +6,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 
 分類：
 
-- Creation Operators (所有方法都是 static 的)
+- Creation Operators (幾乎所有方法都是 static 的)
   * ajax - 將 Ajax 請求轉化爲 Observabl。
   * bindCallback - 將一個最後一個參數爲 callback 的函數一轉化爲一個產生 observable 的函數二，函數二的參數列表爲函數一除 callback 外的其它參數。
   * bindNodeCallback - 特殊格式的 bindCallback。
@@ -19,10 +19,10 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * fromPromise - 輸入 Promise 生成 Observable。
   * generate
   * interval - 生成一個無限的定時輸入事件流（數據爲從 0 開始的序號）的 Observable。
-  * never
+  * never - 從不 emit，與 empty 相似，但是連 complete 也沒有。
   * of - 接收一系列的單個元素，並其生成 Observable。
-  * repeat
-  * repeatWhen
+  * repeat [non-static]
+  * repeatWhen [non-static]
   * range - 輸出一定範圍的數字。
   * throw
   * timer - 第一個參數爲定時時間（即多久以後，或者某個時間點開始），如果第二個參數指定，則爲 interval；不指定則爲 timeout。
@@ -87,7 +87,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 - Combination Operators
   * combineAll
   * combineLatest
-  * concat
+  * concat [static] - 
   * concatAll
   * exhaust
   * forkJoin [static]
