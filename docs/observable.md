@@ -24,7 +24,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * repeat [non-static]
   * repeatWhen [non-static]
   * range - 輸出一定範圍的數字。
-  * throw
+  * throw - 只輸入 error，沒有 next 也沒有 complete。
   * timer - 第一個參數爲定時時間（即多久以後，或者某個時間點開始），如果第二個參數指定，則爲 interval；不指定則爲 timeout。
   * webSocket
 
