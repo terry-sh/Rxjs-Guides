@@ -17,7 +17,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * fromEvent
   * fromEventPattern
   * fromPromise - 輸入 Promise 生成 Observable。
-  * generate
+  * generate - 接受初始值，終止條件，遞增函數，（可選map函數），生成一個類似 generator 的 Observable。
   * interval - 生成一個無限的定時輸入事件流（數據爲從 0 開始的序號）的 Observable。
   * never - 從不 emit，與 empty 相似，但是連 complete 也沒有。
   * of - 接收一系列的單個元素，並其生成 Observable。
