@@ -97,7 +97,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * startWith
   * switch
   * withLatestFrom
-  * zip [static]
+  * zip [static] - 把多個來源的 Observable 融合，使得新的 Observable 達成多源 event 的 zip。
   * zipAll
 
 - Multicasting Operators
