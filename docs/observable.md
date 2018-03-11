@@ -140,8 +140,8 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 
 - Mathematical and Aggregate Operators
 	* count
-	* max
-	* min
+	* max - 返回數據流中的最大值
+	* min - 返回數據流中的最小值
 	* reduce
 
 ## Reference
