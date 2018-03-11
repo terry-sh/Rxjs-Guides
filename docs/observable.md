@@ -21,7 +21,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * interval - 生成一個無限的定時輸入事件流（數據爲從 0 開始的序號）的 Observable。
   * never - 從不 emit，與 empty 相似，但是連 complete 也沒有。
   * of - 接收一系列的單個元素，並其生成 Observable。
-  * repeat [non-static]
+  * repeat [non-static] - 重複源 Observable 多次；Observable 必須調用了 complete 或者 error。因此，需要注意的是，某些類型的 Observable 可能不起作用。
   * repeatWhen [non-static]
   * range - 輸出一定範圍的數字。
   * throw - 只輸入 error，沒有 next 也沒有 complete。
@@ -97,8 +97,8 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * startWith
   * switch
   * withLatestFrom
-  * zip [static] - 把多個來源的 Observable 融合，使得新的 Observable 達成多源 event 的 zip。
-  * zipAll
+  * zip [static] - 傳入多個 Observable，最後一個參數數是 zip 函數，把多個 Observable 融合成一個。
+  * zipAll - 
 
 - Multicasting Operators
   * cache
@@ -143,3 +143,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 	* max
 	* min
 	* reduce
+
+## Reference
+
+  - [Observable 標準提案](https://github.com/tc39/proposal-observable)
