@@ -57,8 +57,8 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * windowWhen
 
 - Filtering Operators
-  * debounce
-  * debounceTime
+  * debounce - 如果當前事件距離上一個事件的間隔超過規定時間，則發起事件，否則重新開始計時
+  * debounceTime - 功能同 debounce，只不過第一個參數爲時間
   * distinct
   * distinctKey
   * distinctUntilChanged
