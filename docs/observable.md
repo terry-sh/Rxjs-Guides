@@ -136,7 +136,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * every
   * find
   * findIndex
-  * isEmpty
+  * isEmpty - 檢測事件流是否爲空，返回新的Observable，是則發起 true 否則發起 false 
 
 - Mathematical and Aggregate Operators
 	* count
