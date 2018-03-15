@@ -29,7 +29,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * webSocket
 
 - Transformation Operators
-  * buffer
+  * buffer - 将 Observable B 的事件发生时，其之前的 A 的事件缓存起来成一个数组；
   * bufferCount
   * bufferTime
   * bufferToggle
