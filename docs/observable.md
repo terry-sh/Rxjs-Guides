@@ -30,8 +30,8 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 
 - Transformation Operators
   * buffer - 将 Observable B 的事件发生时，其之前的 A 的事件缓存起来成一个数组；每次缓存之后都要清空缓存并重新开始。
-  * bufferCount - 按數量將事件流進行緩存。
-  * bufferTime
+  * bufferCount - 按數量將事件流進行緩存；第二个参数为下次缓存再次发起的事件数间隔。
+  * bufferTime - 在当前的事件时间点，将过去某段时间内的事件缓存起来；第二个参数为下次缓存再次发起次的时间间隔；第三个参数为缓存数量上限。
   * bufferToggle
   * bufferWhen
   * concatMap
