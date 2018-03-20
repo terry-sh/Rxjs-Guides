@@ -68,7 +68,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * elementAt - 返回第 i + 1 個事件（即序數從 0 開始），並發起 complete。
   * filter - 傳入條件判斷函數，返回符合條件的事件
   * first - 返回事件流中的第一個，如果沒有，則會拋出異常。
-  * ignoreElements
+  * ignoreElements - 忽略所有的事件，只留下 complete 和 error。
   * audit
   * auditTime
   * last - 返回事件流中的最後一個（所以必須要有 complete）；如果沒有，則拋出異常。
