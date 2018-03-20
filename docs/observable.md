@@ -49,7 +49,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * pairwise
   * partition
   * pluck
-  * scan - 類似 reduce，但每次每會發起事件。
+  * scan - 類似 reduce，但每次都會發起事件。
   * switchMap
   * switchMapTo
   * window
@@ -82,7 +82,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * take - 從事件流中，從第一個元素開始選擇一定數量的事件；如果數量不足，不會拋出異常；
   * takeLast - 從事件流中，以最後一個元素講，選擇一定數量的事件（必須要有 complte）；如果數量不足，不會拋出異常；
   * takeUntil - 傳入一個 Observable，取當其發起一個事件時的所有源事件。
-  * takeWhile
+  * takeWhile - 
   * throttle
   * throttleTime
 
@@ -99,7 +99,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * startWith
   * switch
   * withLatestFrom
-  * zip [static] - 傳入多個 Observable，最後一個參數數是 zip 函數，把多個 Observable 融合成一個。
+  * zip [static] - 傳入多個 Observable 融合成一個，最後一個可选參數數是 zip 函數，如果沒有則合並成一個數組。
   * zipAll - 
 
 - Multicasting Operators
