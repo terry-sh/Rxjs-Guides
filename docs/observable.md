@@ -35,13 +35,14 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
     + bufferTime - 在當前的事件時間點，将过去某段时间内的事件缓存起来；第二个参数为下次缓存再次发起次的时间间隔；第三个参数为缓存数量上限。
     + bufferToggle - 在 第一個 Observable 發起事件時開始計算，在 第二個 Observable 發起時結束，其中間的數據緩存起來。如果第一個重新發起事件而第二個未發起事件，則返回空數組並繼續計數。
     + bufferWhen - 接收一個產生 Observable 的函數，在這個函數返回的Observable有事件產生時，將源Observale 的事件緩存起來，並從新開始緩存。
+  * map 類
+    + map - 將事件流每一個映射爲新的事件
+    + mapTo - 將所有的事件流都映射爲新的事件（同一個）
   * concatMap
   * concatMapTo
   * exhaustMap
   * expand
   * groupBy
-  * map
-  * mapTo
   * mergeMap
   * mergeMapTo
   * mergeScan
@@ -78,7 +79,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * skipLast
   * skipUntil
   * skipWhile
-  * take
+  * take - 從事件流中選擇一定數量的事件（從頭開始選擇）
   * takeLast
   * takeUntil
   * takeWhile
