@@ -75,7 +75,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * sample
   * sampleTime
   * single
-  * skip
+  * skip - 將事件流中前 n 個事件過濾掉；如果 n 大於事件流總數，則全部事件都爲空。事件流不需要 complete。
   * skipLast
   * skipUntil
   * skipWhile
