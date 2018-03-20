@@ -66,7 +66,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * distinctUntilChanged
   * distinctUntilKeyChanged
   * elementAt - 返回第 i + 1 個事件（即序數從 0 開始），並發起 complete。
-  * filter
+  * filter - 傳入條件判斷函數，返回符合條件的事件
   * first
   * ignoreElements
   * audit
