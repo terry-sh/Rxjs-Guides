@@ -143,7 +143,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 	* count - 對事件流總數進行計數（必須有 complete）
 	* max - 返回數據流中的最大值
 	* min - 返回數據流中的最小值
-	* reduce
+	* reduce - 將事件流進行 reduce 操作，最後只發起一個事件
 
 ## Reference
 
