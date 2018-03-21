@@ -78,11 +78,11 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * skip - 將事件流中前 n 個事件過濾掉；如果 n 大於事件流總數，則全部事件都爲空。事件流不需要 complete。
   * skipLast - 從最後一個算起，過濾最後的 n 個事件。如果 n 爲負數，則拋出異常。事件流不需要 complete。
   * skipUntil - 傳入 Observable，忽略源數據流的數據直到這個 Observable 發出事件。
-  * skipWhile
+  * skipWhile - 傳入一個判斷函數，返回該函數第一次返回 false 的時候及之後的所有事件流（之前的則忽略）
   * take - 從事件流中，從第一個元素開始選擇一定數量的事件；如果數量不足，不會拋出異常；
   * takeLast - 從事件流中，以最後一個元素講，選擇一定數量的事件（必須要有 complete）；如果數量不足，不會拋出異常；
   * takeUntil - 傳入一個 Observable，取當其發起一個事件時的所有源事件。
-  * takeWhile - 傳入一個判斷函數，取事件流中符合條件的事件，直到第一個不符合條件的結束，並發起 complete。
+  * takeWhile - 傳入一個判斷函數，返回該函數第一次返回 false 之前的所有事件，並發起 complete。
   * throttle
   * throttleTime
 
