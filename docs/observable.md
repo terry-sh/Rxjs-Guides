@@ -60,13 +60,15 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 
 - Filtering Operators
   * 節流/穩流
-    + debounce - 如果當前事件距離上一個事件的間隔超過規定時間，則發起事件，否則重新開始計時
-    + debounceTime - 功能同 debounce，只不過第一個參數爲時間
     + audit
     + auditTime
+    + debounce - 如果當前事件距離上一個事件的間隔超過規定時間，則發起事件，否則重新開始計時。
+    + debounceTime - 功能同 debounce，只不過第一個參數爲時間
+    + sample 
+    + sampleTime
     + throttle
     + throttleTime
-  * distinct
+  * distinct - 將事件流中的事件比較，去重並依序返回；可傳入比較函數作參數，否則使用 ===（全等比較）。
   * distinctKey
   * distinctUntilChanged
   * distinctUntilKeyChanged
@@ -75,8 +77,6 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * first - 返回事件流中的第一個，如果沒有，則會拋出異常。
   * ignoreElements - 忽略所有的事件，只留下 complete 和 error。
   * last - 返回事件流中的最後一個（所以必須要有 complete）；如果沒有，則拋出異常。
-  * sample
-  * sampleTime
   * single - 當且僅且事件流中符合條件的事件只有一個；如果多於一個會拋出異常；少於一個會返回 undefined。
   * skip 類
     + skip - 將事件流中前 n 個事件過濾掉；如果 n 大於事件流總數，則全部事件都爲空。事件流不需要 complete。
