@@ -68,10 +68,11 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
     + sampleTime
     + throttle
     + throttleTime
-  * distinct - 將事件流中的事件比較，去重並依序返回；可傳入比較函數作參數，否則使用 ===（全等比較）。
-  * distinctKey
-  * distinctUntilChanged
-  * distinctUntilKeyChanged - 將當前事件與前一個事件比較其對象中某個key下的值，如果相同則過濾。
+  * distinct
+    + distinct - 將事件流中的事件比較，去重並依序返回；可傳入比較函數作參數，否則使用 ===（全等比較）。
+    + distinctKey - 與 distinct 類似，但將事件流中的事件對象要某個key的值進行比較。
+    + distinctUntilChanged
+    * distinctUntilKeyChanged - 與 distinctUntilChanged 想似；將當前事件與前一個事件比較其對象中某個key下的值，如果相同則過濾。
   * elementAt - 返回第 i + 1 個事件（即序數從 0 開始），並發起 complete。
   * filter - 傳入條件判斷函數，返回符合條件的事件
   * first - 返回事件流中的第一個，如果沒有，則會拋出異常。
