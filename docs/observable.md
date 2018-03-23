@@ -42,7 +42,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * concatMapTo
   * exhaustMap
   * expand
-  * groupBy
+  * groupBy - 將事件流按其性質進行組合，返回 GroupedObservable 的 Observable。
   * mergeMap
   * mergeMapTo
   * mergeScan
@@ -149,6 +149,10 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 	* max - 返回數據流中的最大值
 	* min - 返回數據流中的最小值
 	* reduce - 將事件流進行 reduce 操作，最後只發起一個事件
+
+## 難點
+
+Observable 的運算符難點在於 Combination operator 部分。
 
 ## Reference
 
