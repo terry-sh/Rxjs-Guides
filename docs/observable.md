@@ -54,7 +54,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * switchMapTo
   * window 類
     + window - 類似 buffer，但返回的不是數組而是 Observable。
-    + windowCount
+    + windowCount - 類似 bufferCount，但返回的是 Observable。
     + windowTime
     + windowToggle
     + windowWhen
@@ -153,7 +153,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 
 ## 難點
 
-Observable 的運算符難點在於 Combination operator 部分。
+Observable 的運算符難點在於 Transform operators 部分。
 
 ## Reference
 
