@@ -55,7 +55,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * window 類
     + window - 類似 buffer，但返回的不是數組而是 Observable。
     + windowCount - 類似 bufferCount，但返回的是 Observable。
-    + windowTime
+    + windowTime - 類似 bufferTime，但返回 Observable。
     + windowToggle
     + windowWhen
 
