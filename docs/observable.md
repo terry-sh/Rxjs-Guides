@@ -153,7 +153,10 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 
 ## 難點
 
-Observable 的運算符難點在於 Transform operators 部分。
+Observable 的運算符難點在於：
+  1. transform 類操作符
+  2. combination 類操作符中的：
+    - exhaust
 
 ## Reference
 
