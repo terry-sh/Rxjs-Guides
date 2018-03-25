@@ -99,7 +99,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * exhaust
   * forkJoin [static]
   * merge [static]
-  * mergeAll
+  * mergeAll - 將內層的 Observable 事件中的 事件 合並到外層。
   * race
   * startWith
   * switch
