@@ -133,7 +133,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * subscribeOn
   * timeInterval
   * timestamp
-  * timeout
+  * timeout - 檢測一段時間間隔內是否有事件。如果有，則繼續；如果沒有事件，則拋出異常，並中止後續的事件。
   * timeoutWith
   * toArray
   * toPromise
@@ -157,6 +157,8 @@ Observable 的運算符難點在於：
   1. transform 類操作符
   2. combination 類操作符中的：
     - exhaust
+  3. utility 類中的：
+    - observeOn
 
 ## Reference
 
