@@ -123,7 +123,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 
 - Utility Operators
   * do
-  * delay
+  * delay - 將事件流延遲；如果參數是數字，則延後該數字間隔的時間；如果是時間戳，則延遲至該時間（即到該時間才發起第一個事件）。
   * delayWhen
   * dematerialize
   * finally
