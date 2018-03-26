@@ -122,7 +122,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * retryWhen
 
 - Utility Operators
-  * do
+  * do - 用於消費事件流中的事件，但舊的事件流仍然照原樣返回。通常用於 debug。需要注意的是，如果沒有 subscribe，則不會有任何效果。
   * delay - 將事件流延遲；如果參數是數字，則延後該數字間隔的時間；如果是時間戳，則延遲至該時間（即到該時間才發起第一個事件）。
   * delayWhen
   * dematerialize
