@@ -46,7 +46,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * mergeMap
   * mergeMapTo
   * mergeScan
-  * pairwise
+  * pairwise - 將事件流中鄰近的兩個事件合並成一個數組，作爲新的事件。注意：事件流不需要complete；如果事件數少於2，則不發起任何新事件。
   * partition
   * pluck - 類似map，但將事件流對象按某個 key 的值來一一映射。
   * scan - 類似 reduce，但每次都會發起事件。
