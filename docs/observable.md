@@ -43,8 +43,8 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * exhaustMap
   * expand
   * groupBy - 將事件流按其性質進行組合，返回 GroupedObservable 的 Observable；注意的是，需要 observable 是有 complete 的，否則將無效。
-  * mergeMap - 先将事件流中的事件 map 成新的 Observable，再把 新的 Observable 里的所有事件 merge 起来。
-  * mergeMapTo
+  * mergeMap - 先将事件流中的事件 map 成新的 Observable，再把新的 Observable 里的所有事件 merge 起来。
+  * mergeMapTo - 先将事件流中的事件 map 成新 Observale 常数，再把其中的所有事件 merge 起来。
   * mergeScan
   * pairwise - 將事件流中鄰近的兩個事件合並成一個數組，作爲新的事件。注意：事件流不需要complete；如果事件數少於2，則不發起任何新事件。
   * partition - 傳入一個判斷函數，將事件流轉爲兩個不同的 Observable，組成數組返回，第一個爲通過了測試的所有事件的集合，第二個反之。
