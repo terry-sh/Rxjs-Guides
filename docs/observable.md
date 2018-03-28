@@ -96,7 +96,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * combineLatest
   * concat [static] - 將事件流中的內部 Observable 的事件合並，功能與 concatAll 相同，但爲 static 方法。
   * concatAll - 將事件流中的的多個 類型爲 Observable 的事件其內部的事件，依次（按照 Observable 的顺序而不是事件的顺序）合並（因此需要內部 Observable 有 complete）。需要注意的是，合並並不會改變事件的時間间隔。
-  * exhaust
+  * exhaust - 高阶 Observable 的方法，直到当前的事件（Observable）complete，才开始消费新的 Observable，否则将跳过。
   * forkJoin [static] - 將每個 Observable 最後一個事件組合成（因此需要 Observable 有 complete）；最後的參數爲合成函數，如不傳入，則合成數組。
   * merge [static] - 將各個 Observable 的事件流合並成一個流。
   * mergeAll - 將內層的 Observable 事件中的 事件 合並到外層。
