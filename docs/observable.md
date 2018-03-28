@@ -38,13 +38,13 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * map 類
     + map - 將事件流每一個映射爲新的事件
     + mapTo - 將所有的事件流都映射爲新的事件（同一個）
-  * concatMap
+  * concatMap - 将源Observable中的事件先map成新的Observable，再将其 concat 起来（注意 concat 与 merge 的不同）。
   * concatMapTo
   * exhaustMap
   * expand
   * groupBy - 將事件流按其性質進行組合，返回 GroupedObservable 的 Observable；注意的是，需要 observable 是有 complete 的，否則將無效。
-  * mergeMap - 先将事件流中的事件 map 成新的 Observable，再把新的 Observable 里的所有事件 merge 起来。
-  * mergeMapTo - 先将事件流中的事件 map 成新 Observale 常数，再把其中的所有事件 merge 起来。
+  * mergeMap - 先将源Observable中事件流中的事件 map 成新的 Observable，再把新的 Observable 里的所有事件 merge 起来；等价于 `map().mergeAll()`。
+  * mergeMapTo - 先将事件流中的事件 map 成新 Observale 常数，再把其中的所有事件 merge 起来；等价于 `mapTo().mergeAll()`。
   * mergeScan
   * pairwise - 將事件流中鄰近的兩個事件合並成一個數組，作爲新的事件。注意：事件流不需要complete；如果事件數少於2，則不發起任何新事件。
   * partition - 傳入一個判斷函數，將事件流轉爲兩個不同的 Observable，組成數組返回，第一個爲通過了測試的所有事件的集合，第二個反之。
@@ -95,7 +95,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * combineAll
   * combineLatest
   * concat [static] - 將事件流中的內部 Observable 的事件合並，功能與 concatAll 相同，但爲 static 方法。
-  * concatAll - 將事件流中的的多個 類型爲 Observable 的事件其內部的事件，依次合並（因此需要內部 Observable 有 complete）。需要注意的是，合並並不會改變事件的時間。
+  * concatAll - 將事件流中的的多個 類型爲 Observable 的事件其內部的事件，依次（按照 Observable 的顺序而不是事件的顺序）合並（因此需要內部 Observable 有 complete）。需要注意的是，合並並不會改變事件的時間间隔。
   * exhaust
   * forkJoin [static] - 將每個 Observable 最後一個事件組合成（因此需要 Observable 有 complete）；最後的參數爲合成函數，如不傳入，則合成數組。
   * merge [static] - 將各個 Observable 的事件流合並成一個流。
