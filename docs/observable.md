@@ -102,7 +102,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * mergeAll - 將內層的 Observable 事件中的 事件 合並到外層。
   * race
   * startWith - 在事件流前插入一個指定的事件
-  * switch
+  * switch - 可应用 switch 的 Observable 其事件类型必须也为 Observable。当每次有新的事件发起时，都使用最新的那个 Observable；当源 Observable 的事件不为 Observable，则抛出异常。
   * withLatestFrom
   * zip [static] - 傳入多個 Observable ，將其值一一對應，融合成一個。最後一個可选參數數是 zip 函數，如果沒有則合並成一個數組。
   * zipAll - 功能與 zip 類似，但不是 static 方法；可選參數爲函數。
