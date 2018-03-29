@@ -12,5 +12,4 @@ const example = Rx.Observable.race(
   Rx.Observable.interval(2500).mapTo('Kuma')
 )
 
-//output: "1s won!"..."1s won!"...etc
 const subscribe = example.subscribe(val => console.log('Winner is: ', val))
