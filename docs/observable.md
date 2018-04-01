@@ -119,7 +119,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 - Error Handling Operators
   * catch - 捕捉事件流中的異常並以新的 Observable 代表當前的 Observale，以使事件流可以繼續。
   * retry - 出錯時重試（從頭開始）；如果在嘗試次數內已完成，則不需繼續重試。
-  * retryWhen
+  * retryWhen - 傳入一個 Observable，用戶可以操作以決定何時終止重試等。
 
 - Utility Operators
   * do - 用於消費事件流中的事件，但舊的事件流仍然照原樣返回。通常用於 debug。需要注意的是，如果沒有 subscribe，則不會有任何效果。
