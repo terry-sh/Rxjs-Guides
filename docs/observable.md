@@ -40,8 +40,8 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
     + mapTo - 將所有的事件流都映射爲新的事件（同一個）
   * concatMap - 将源 Observable 中的事件先map成新的Observable，再将其 concat 起来（注意 concat 与 merge 的不同）。
   * concatMapTo - 与 concatMap 类似，区别类似于 map 与 mapTo。
-  * exhaustMap
-  * expand
+  * exhaustMap - map（返回高階Observable）与 exhaust 的結合
+  * expand - [难理解]
   * groupBy - 將事件流按其性質進行組合，返回 GroupedObservable 的 Observable；注意的是，需要 observable 是有 complete 的，否則將無效。
   * mergeMap - 先将源Observable中事件流中的事件 map 成新的 Observable，再把新的 Observable 里的所有事件 merge 起来；等价于 `map().mergeAll()`。
   * mergeMapTo - 先将事件流中的事件 map 成新 Observale 常数，再把其中的所有事件 merge 起来；等价于 `mapTo().mergeAll()`。
