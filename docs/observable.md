@@ -45,7 +45,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * groupBy - 將事件流按其性質進行組合，返回 GroupedObservable 的 Observable；注意的是，需要 observable 是有 complete 的，否則將無效。
   * mergeMap - 先将源Observable中事件流中的事件 map 成新的 Observable，再把新的 Observable 里的所有事件 merge 起来；等价于 `map().mergeAll()`。
   * mergeMapTo - 先将事件流中的事件 map 成新 Observale 常数，再把其中的所有事件 merge 起来；等价于 `mapTo().mergeAll()`。
-  * mergeScan - 先將事件流應用 scan（返回一個高階 Observable），再將返回的內部 Observable 的事件回到外層；相當於`scan().mergeAll()`。
+  * mergeScan - 先將事件流應用 scan（返回一個高階 Observable），再將返回的內部 Observable 的事件回到外層；原理上即先 scan 後 merge。
   * pairwise - 將事件流中鄰近的兩個事件合並成一個數組，作爲新的事件。注意：事件流不需要complete；如果事件數少於2，則不發起任何新事件。
   * partition - 傳入一個判斷函數，將事件流轉爲兩個不同的 Observable，組成數組返回，第一個爲通過了測試的所有事件的集合，第二個反之。
   * pluck - 類似map，但將事件流對象按某個 key 的值來一一映射。
@@ -124,7 +124,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
 - Utility Operators
   * do - 用於消費事件流中的事件，但舊的事件流仍然照原樣返回。通常用於 debug。需要注意的是，如果沒有 subscribe，則不會有任何效果。
   * delay - 將事件流延遲；如果參數是數字，則延後該數字間隔的時間；如果是時間戳，則延遲至該時間（即到該時間才發起第一個事件）。
-  * delayWhen
+  * delayWhen - 傳入一個返回 Observable 的函數，將源 Observable 的事件發起事件依次對應爲每個返回的 Observable 的第一個事件發起的時間。
   * dematerialize
   * finally
   * let
