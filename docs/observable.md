@@ -50,8 +50,8 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * partition - 傳入一個判斷函數，將事件流轉爲兩個不同的 Observable，組成數組返回，第一個爲通過了測試的所有事件的集合，第二個反之。
   * pluck - 類似map，但將事件流對象按某個 key 的值來一一映射。
   * scan - 類似 reduce，但每次都會發起事件。
-  * switchMap -將事件流對應 map 成系列的 Observable，並對這些 Observable 應用 switch。
-  * switchMapTo
+  * switchMap - 將事件流對應 map 成一系列的 Observable，並對這些 Observable 應用 switch。
+  * switchMapTo - 將事件流對應 mapTo 成一系列的 Observable（常数），並對這些 Observable 應用 switch；等价于 `mapTo().switch()`。
   * window 類
     + window - 類似 buffer，但返回的不是數組而是 Observable。
     + windowCount - 類似 bufferCount，但返回的是 Observable。
