@@ -38,20 +38,21 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * map 類
     + map - 將事件流每一個映射爲新的事件
     + mapTo - 將所有的事件流都映射爲新的事件（同一個）
-  * concatMap - 将源 Observable 中的事件先map成新的Observable，再将其 concat 起来（注意 concat 与 merge 的不同）。
-  * concatMapTo - 与 concatMap 类似，区别类似于 map 与 mapTo。
-  * exhaustMap - map（返回高階Observable）与 exhaust 的結合；相當於`map().exhaust()`。
+    + pluck - 類似 map，但將事件流對象按某個 key 的值來一一映射；等價於：`.map(e => e[key])`。
+  * 複合類
+    + concatMap - 將源 Observable 中的事件先映射成新的 Observable，再將其 concat 起來（注意 concat 與 merge 的不同）；`map().concatAll()`。
+    + concatMapTo - 與 concatMap 類似（區別类比於 map 与 mapTo）；等價於 `mapTo().concatAll()`。
+    + exhaustMap - map（返回高階Observable）与 exhaust 的結合；相當於 `map().exhaust()`。
+    + mergeMap - 先将源Observable中事件流中的事件 map 成新的 Observable，再把新的 Observable 里的所有事件 merge 起来；等价于 `map().mergeAll()`。
+    + mergeMapTo - 先将事件流中的事件 map 成新 Observale 常数，再把其中的所有事件合並起来；等价于 `mapTo().mergeAll()`。
+    + mergeScan - 先將事件流應用 scan（返回一個高階 Observable），再將返回的內部 Observable 的事件回到外層；原理上即先 scan 後 merge。
+    + switchMap - 將事件流對應 map 成一系列的 Observable，並對這些 Observable 應用 switch；等價於 `map().switch()`。
+    + switchMapTo - 將事件流對應 mapTo 成一系列的 Observable（常数），並對這些 Observable 應用 switch；等价于 `mapTo().switch()`。
   * expand - [难理解]
   * groupBy - 將事件流按其性質進行組合，返回 GroupedObservable 的 Observable；注意的是，需要 observable 是有 complete 的，否則將無效。
-  * mergeMap - 先将源Observable中事件流中的事件 map 成新的 Observable，再把新的 Observable 里的所有事件 merge 起来；等价于 `map().mergeAll()`。
-  * mergeMapTo - 先将事件流中的事件 map 成新 Observale 常数，再把其中的所有事件 merge 起来；等价于 `mapTo().mergeAll()`。
-  * mergeScan - 先將事件流應用 scan（返回一個高階 Observable），再將返回的內部 Observable 的事件回到外層；原理上即先 scan 後 merge。
   * pairwise - 將事件流中鄰近的兩個事件合並成一個數組，作爲新的事件。注意：事件流不需要complete；如果事件數少於2，則不發起任何新事件。
   * partition - 傳入一個判斷函數，將事件流轉爲兩個不同的 Observable，組成數組返回，第一個爲通過了測試的所有事件的集合，第二個反之。
-  * pluck - 類似map，但將事件流對象按某個 key 的值來一一映射。
   * scan - 類似 reduce，但每次都會發起事件。
-  * switchMap - 將事件流對應 map 成一系列的 Observable，並對這些 Observable 應用 switch。
-  * switchMapTo - 將事件流對應 mapTo 成一系列的 Observable（常数），並對這些 Observable 應用 switch；等价于 `mapTo().switch()`。
   * window 類
     + window - 類似 buffer，但返回的不是數組而是 Observable。
     + windowCount - 類似 bufferCount，但返回的是 Observable。
@@ -157,6 +158,7 @@ Observable 的運算符難點在於：
 
   1. Creation 類操作符：
     - bindCallback
+    - defer
   1. transform 類操作符
   2. combination 類操作符：
     - combineAll
