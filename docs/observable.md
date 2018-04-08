@@ -132,7 +132,7 @@ Observable 是 Rxjs 的核心，它主要負責事件流的產生及分發。
   * observeOn
   * subscribeOn
   * timeInterval
-  * timestamp
+  * timestamp - 将每个事件流包装成一个含有该事件发生的时间戳的对象；约等价于 `.map(e => ({ timpestamp: Date.now(), value: e }))`。
   * timeout - 檢測一段時間間隔內是否有事件。如果有，則繼續；如果沒有事件，則拋出異常，並中止後續的事件。
   * timeoutWith
   * toArray - 將多個事件流合並成一個數組
