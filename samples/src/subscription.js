@@ -1,7 +1,7 @@
-var Rx = require('rxjs')
+const { interval } = require('rxjs')
 
-var observable1 = Rx.Observable.interval(400);
-var observable2 = Rx.Observable.interval(300);
+var observable1 = interval(400);
+var observable2 = interval(300);
 
 var subscription = observable1.subscribe(x => console.log('first: ' + x));
 var childSubscription = observable2.subscribe(x => console.log('second: ' + x));

@@ -1,10 +1,11 @@
-const Rx = require('rxjs')
+const { of, Notification } = require('rxjs')
+const { dematerialize } = require('rxjs/operators')
 
-const source = Rx.Observable.of(
-	Rx.Notification.createNext('b'),
-	Rx.Notification.createNext('a'),
-	Rx.Notification.createComplete(),
-).dematerialize()
+const source = of(
+	Notification.createNext('b'),
+	Notification.createNext('a'),
+	Notification.createComplete(),
+).pipe(dematerialize())
 
 const subscription = source.subscribe(
 	i => console.log(i),

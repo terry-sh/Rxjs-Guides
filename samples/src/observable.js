@@ -1,8 +1,8 @@
-var Rx = require("rxjs")
+const { Observable } = require("rxjs")
 
 let _observer = null
 
-const observable = Rx.Observable.create(observer => {
+const observable = Observable.create(observer => {
   _observer = observer
 
   observer.next(1)
