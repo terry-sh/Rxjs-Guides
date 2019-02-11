@@ -17,13 +17,14 @@ const subscribe = tag => {
   })
 }
 
-// 如果注释掉该行，下面的代码执行时，_observer 为 null
-subscribe(1)
+// 每次 subscribe 的时候，都会产生一个新的 observer
 
-_observer.next("o1 - " + Math.random())
-_observer.next("o2 - " + Math.random())
+subscribe(1)
+_observer.next("o11 - " + Math.random())
+_observer.next("o12 - " + Math.random())
 
 subscribe(2)
-subscribe(3)
+_observer.next("o21 - " + Math.random())
 
+subscribe(3)
 _observer.complete()
