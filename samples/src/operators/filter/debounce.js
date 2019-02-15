@@ -1,10 +1,17 @@
-const Rx = require('rxjs')
+const {
+  interval
+} = require('rxjs')
+const {
+  take,
+  debounce
+} = require('rxjs/operators')
 
-Rx.Observable.interval(100).take(10).debounce(() => Rx.Observable.interval(100)).subscribe(
-	i => {
-		console.log(i)
-	},
-	err => {},
-	() => {
-		console.log('complete')
-	})
+interval(100).pipe(
+    take(10),
+    debounce(() => interval(120))
+  )
+  .subscribe(
+    i => console.log(i),
+    err => {},
+    () => console.log('complete')
+  )
