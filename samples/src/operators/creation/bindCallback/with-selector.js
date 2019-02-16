@@ -1,14 +1,14 @@
-const Rx = require('rxjs')
+const { bindCallback } = require('rxjs')
+
 
 // 多參數 加 selector
-const obs3 = Rx.Observable.bindCallback(
+const obs3 = bindCallback(
 	(x, y, cb) => {
 		const z = x + y
 		cb(z, x, y)
 	},
 	(z, x, y) => {
-		console.log('in selector:', z, x, y)
-		return z - x - y
+		return 'abkachi'
 	}
 )
 

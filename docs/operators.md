@@ -4,11 +4,12 @@
 分類：
 
 - Creation Operators (幾乎所有方法都是 static 的)
-  * ajax - 將 Ajax 請求轉化爲 Observabl。
-  * bindCallback - 將一個最後一個參數爲 callback 的函數一轉化爲一個產生 observable 的函數二，函數二的參數列表爲函數一除 callback 外的其它參數。
+
+  * [bindCallback](utils/bindCallback.md) - 其实并非操作符。
   * bindNodeCallback - 特殊格式的 bindCallback。
-  * create - 接收一個函數，生成一個 observable。
-  * defer - 具有 lazy 特性地生成 observable，即當 subscribe 時才生成，且每個 subscribe 都生成不同的對象。
+
+  * create - 接收一个函数，生成一个 Observable。
+  * [defer](operators/defer.md) - 具有 lazy 特性地生成 observable，即当 subscribe 时才生成，且每个 subscribe 都生成不同的对象。
   * empty - 生成一個只會發生 complete 的 Observale，一般不直接使用，而是用於 mergeMap 等合成場合。
   * from - 輸入數組、類數組、Promise、Iterator 等，生成 Observable。
   * fromEvent
