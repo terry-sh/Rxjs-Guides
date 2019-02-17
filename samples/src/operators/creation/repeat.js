@@ -1,23 +1,43 @@
-const Rx = require('rxjs')
+const {
+	Observable,
+	empty,
+	interval
+} = require('rxjs')
 
-Rx.Observable.empty().startWith('empty/startWith').repeat(5).subscribe(i => {
+const {
+	take,
+	repeat,
+	startWith
+} = require('rxjs/operators')
+
+empty().pipe(
+	startWith('empty/startWith'),
+	repeat(2)
+).subscribe(i => {
 	console.log(i)
 })
 
-Rx.Observable.interval(500).take(2).repeat(3).subscribe(i => {
+interval(500).pipe(
+	take(2),
+	repeat(3)
+).subscribe(i => {
 	console.log('interval/take/repeat', i)
 })
 
-// 只會了輸出 2 次：
-Rx.Observable.interval(500).repeat(5).take(2).subscribe(i => {
+// 输出 2 次：
+interval(500).pipe(
+	repeat(5),
+	take(2)
+).subscribe(i => {
 	console.log('interval/repeat/take', i)
 })
 
-// only once!
-Rx.Observable.create(observable => {
+Observable.create(observable => {
 	observable.next('from create')
-	// 如果不加 complte，則無效
+	// 如果不加 complte，则无效；即只输出一次
 	// observable.complete()
-}).repeat(5).subscribe(i => {
+}).pipe(
+	repeat(5)
+).subscribe(i => {
 	console.log(i)
 })
