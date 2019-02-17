@@ -1,9 +1,10 @@
-const Rx = require('rxjs')
+const { defer, timer } = require('rxjs')
+const { mapTo } = require('rxjs/operators')
 
-const lazyObs = Rx.Observable.defer(() => {
+const lazyObs = defer(() => {
 	const random = Math.random()
 
-	return Rx.Observable.timer(2000).mapTo(Math.random())
+	return timer(2000).pipe(mapTo(random))
 })
 
 // 將會輸入不同的內容
