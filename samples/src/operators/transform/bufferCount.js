@@ -1,16 +1,29 @@
-const Rx = require('rxjs')
+const {
+	empty,
+	interval
+} = require('rxjs')
+const {
+	bufferCount,
+	delay,
+	take
+} = require('rxjs/operators')
 
-const event = Rx.Observable.interval(200).take(20)
+const event = interval(200).pipe(take(20))
 
-event.bufferCount(3).subscribe(i => {
+event.pipe(
+	bufferCount(3)
+).subscribe(i => {
 	console.log(i)
 })
 
-console.log('\n')
-
-Rx.Observable.empty().delay(200 * 21).subscribe({
+empty().pipe(
+	delay(200 * 21)
+).subscribe({
 	complete: () => {
-		event.bufferCount(3, 4).subscribe(i => {
+		console.log('\n')
+		event.pipe(
+			bufferCount(3, 4)
+		).subscribe(i => {
 			console.log(i)
 		})
 	}

@@ -9,7 +9,7 @@
   * bindNodeCallback - 特殊格式的 bindCallback。
 
   * create - 接收一个函数，生成一个 Observable。
-  * [defer](operators/defer.md) - 具有 lazy 特性地生成 observable，即当 subscribe 时才生成，且每个 subscribe 都生成不同的对象。
+  * [defer](operators/defer.md) - 具有 lazy 特性地生成 observable，即当 subscribe 时，调用一个工厂方法为每个 subscribe 生成新的 Observable。
   * empty - 生成一個只會發生 complete 的 Observale，一般不直接使用，而是用於 mergeMap 等合成場合。
   * from - 輸入數組、類數組、Promise、Iterator 等，生成 Observable。
   * fromEvent
@@ -19,7 +19,7 @@
   * interval - 生成一個無限的定時輸入事件流（數據爲從 0 開始的序號）的 Observable。
   * never - 從不 emit，與 empty 相似，但是連 complete 也沒有。
   * of - 接收一系列的單個元素，並其生成 Observable。
-  * repeat [non-static] - 重複源 Observable 多次；Observable 必須調用了 complete 或者 error。因此，需要注意的是，某些類型的 Observable 可能不起作用。
+  * [repeat](operators/repeat.md) [non-static] - 重复 Observable 多次。
   * repeatWhen [non-static]
   * range - 輸出一定範圍的數字。
   * throw - 只輸入 error，沒有 next 也沒有 complete。

@@ -1,16 +1,24 @@
-const Rx = require('rxjs')
+const {
+	range
+} = require('rxjs')
+const {
+	map,
+	reduce
+} = require('rxjs/operators')
 
-Rx.Observable
-.range(1, 100)
-.reduce((c, i) => i + c, 0)
-.subscribe(i => {
-	console.log('gauss count', i)
-})
+range(1, 100)
+	.pipe(
+		reduce((c, i) => i + c, 0)
+	)
+	.subscribe(i => {
+		console.log('gauss count', i)
+	})
 
-Rx.Observable
-.range(0, 100)
-.map(() => x => Math.floor(Math.random() * 10 + x))
-.reduce((val, fn) => fn(val), 1)
-.subscribe(i => {
-	console.log('finally reduce', i)
-})
+range(0, 100)
+	.pipe(
+		map(() => x => Math.floor(Math.random() * 10 + x)),
+		reduce((val, fn) => fn(val), 1)
+	)
+	.subscribe(i => {
+		console.log('finally reduce', i)
+	})
