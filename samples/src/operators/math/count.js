@@ -1,18 +1,30 @@
-const Rx = require('rxjs')
+const {
+	Observable,
+	interval
+} = require('rxjs')
+const {
+	take,
+	count
+} = require('rxjs/operators')
 
-Rx.Observable.interval(10).take(20).count().subscribe(i => {
+interval(10).pipe(
+	take(20),
+	count()
+).subscribe(i => {
 	console.log('count from interval', i)
 })
 
-Rx.Observable.create(observable => {
-	observable.next(1)
-	observable.next(2)
-	observable.next(3)
+const observable = Observable.create(observer => {
+	observer.next(1)
+	observer.next(2)
+	observer.next(3)
 
 	// 如果沒有 complete，則不會計數，即 subscribe 不觸發
-	observable.complete()
+	observer.complete()
 
-	observable.next(4)
-}).count().subscribe(i => {
+	observer.next(4)
+})
+
+observable.pipe(count()).subscribe(i => {
 	console.log('count from create', i) // 3
 })

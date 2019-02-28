@@ -1,5 +1,14 @@
-const Rx = require('rxjs')
+const {
+	range
+} = require('rxjs')
+const {
+	map,
+	min
+} = require('rxjs/operators')
 
-Rx.Observable.range(0, 10).map(() => Math.floor(Math.random() * 100)).min().subscribe(i => {
+range(0, 10).pipe(
+	map(() => Math.floor(Math.random() * 100)),
+	min()
+).subscribe(i => {
 	console.log('min value of 10 random numbers: ', i)
 })
