@@ -101,7 +101,7 @@
   * mergeAll - 將內層的 Observable 事件中的 事件 合並到外層。
   * race - 多個 Observable 作爲參數，第一個 emit 的 Observable 將被使用，其它的被忽略。
   * startWith - 在事件流前插入一個指定的事件
-  * switch - 可应用 switch 的 Observable 其事件类型必须也为 Observable。当每次有新的事件发起时，都使用最新的那个 Observable；当源 Observable 的事件不为 Observable，则抛出异常。
+  * switchAll - 可应用 switchAll 的 Observable 其事件类型必须也为 Observable。当每次有新的事件发起时，都使用最新的那个 Observable；当源 Observable 的事件不为 Observable，则抛出异常。(对应旧版本的 switch 方法)
   * withLatestFrom - 固定一個 Observable 作爲源 Observable，當其發起事件時，從其它 Observable 中取一個最近的事件與之結合；類似的請參考 combineLatest。
   * zip [static] - 傳入多個 Observable ，將其值一一對應，融合成一個。最後一個可选參數數是 zip 函數，如果沒有則合並成一個數組。
   * zipAll - 功能與 zip 類似，但不是 static 方法；可選參數爲函數。
