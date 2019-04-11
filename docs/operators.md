@@ -15,7 +15,7 @@
   * fromEvent
   * fromEventPattern
   * fromPromise - 輸入 Promise 生成 Observable。
-  * generate - 接受初始值，終止條件，遞增函數，（可選map函數），生成一個類似 generator 的 Observable。
+  * generate - 接受初始值，终止条件，递增函数，（可选map函数）
   * interval - 生成一個無限的定時輸入事件流（數據爲從 0 開始的序號）的 Observable。
   * never - 從不 emit，與 empty 相似，但是連 complete 也沒有。
   * of - 接收一系列的單個元素，並其生成 Observable。
@@ -59,10 +59,10 @@
     + windowWhen
 
 - Filtering Operators
-  * 節流/穩流
+  * 节流/稳流
     + audit
     + auditTime
-    + debounce - 如果當前事件距離上一個事件的間隔超過規定時間，則發起事件，否則重新開始計時。
+    + debounce - **
     + debounceTime - 功能同 debounce，只不過第一個參數爲時間
     + sample 
     + sampleTime
@@ -154,18 +154,23 @@
 
 Observable 的運算符難點在於：
 
-  1. Creation 類操作符：
+  + Creation 类
     - bindCallback
     - defer
-  1. transform 類操作符
-  2. combination 類操作符：
+  + Transform 类
+  + Combination 类
     - combineAll
     - combineLatest
     - exhaust
     - race
     - switch
     - withLatestFrom
-  3. utility 類中的：
+  + Filter 类
+    - audit
+    - debounce
+    - throttle
+    - sample
+  + Utility 类
     - observeOn
 
 ## Reference
