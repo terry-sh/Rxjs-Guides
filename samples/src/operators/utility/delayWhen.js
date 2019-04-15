@@ -1,11 +1,13 @@
-const Rx = require('rxjs')
+const { interval } = require("rxjs")
+const { take, delayWhen } = require("rxjs/operators")
 
 {
-	Rx.Observable
-		.interval(500)
-		.take(10)
-		.delayWhen(i => Rx.Observable.interval(Math.random() * 5000))
-		.subscribe(i => {
-			console.log(i)
-		})
+  interval(500)
+    .pipe(
+      take(10),
+      delayWhen(i => interval(Math.random() * 5000))
+    )
+    .subscribe(i => {
+      console.log(i)
+    })
 }
