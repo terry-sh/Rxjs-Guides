@@ -116,9 +116,9 @@
   * share
 
 - Error Handling Operators
-  * catch - 捕捉事件流中的異常並以新的 Observable 代表當前的 Observale，以使事件流可以繼續。
-  * retry - 出錯時重試（從頭開始）；如果在嘗試次數內已完成，則不需繼續重試。
-  * retryWhen - 傳入一個 Observable，用戶可以操作以決定何時終止重試等。
+  * catch/catchError - 捕捉事件流中的异常并以新的 Observable 代替当前的 Observale。
+  * retry - 出错时重试（可传入参数，规定尝试次數）。
+  * retryWhen - 传入一个返回 Observable 的函数，用户可以决定何时开始、终止重试等。
 
 - Utility Operators
   * do - 用於消費事件流中的事件，但舊的事件流仍然照原樣返回。通常用於 debug。需要注意的是，如果沒有 subscribe，則不會有任何效果。
@@ -170,6 +170,9 @@ Observable 的運算符難點在於：
     - debounce
     - throttle
     - sample
+  + Error 类
+    - retry
+    - retryWhen
   + Utility 类
     - observeOn
 

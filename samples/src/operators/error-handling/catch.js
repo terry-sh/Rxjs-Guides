@@ -1,11 +1,16 @@
-const Rx = require('rxjs')
+const { range, of } = require("rxjs")
+const { catchError, map } = require("rxjs/operators")
 
-Rx.Observable.range(1, 8)
-.map(i => {
-	if (i == 4) { throw '4 is dead' }
-	return i
-})
-.catch(err => Rx.Observable.of('A', 'B', 'C'))
-.subscribe(i => {
-	console.log(i)
-})
+range(1, 8)
+  .pipe(
+    map(i => {
+      if (i == 4) {
+        throw "4 is dead"
+      }
+      return i
+    }),
+    catchError(err => of("A", "B", "C"))
+  )
+  .subscribe(i => {
+    console.log(i)
+  })
