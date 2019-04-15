@@ -1,14 +1,18 @@
-const Rx = require('rxjs');
+const { Subject } = require("rxjs")
+const { throttleTime, debounceTime, switchMap } = require("rxjs/operators")
 
-const subject = new Rx.Subject();
+const subject = new Subject()
 
-subject.throttleTime(1000).subscribe(i => console.log('[subject 1]', i));
-subject.debounceTime(1000).subscribe(i => console.log('[subject 2]', i));
+const pipe1 = subject.pipe(throttleTime(1000))
+const pipe2 = subject.pipe(debounceTime(1000))
 
-[200, 800, 300, 220, 400, 900, 1050, 600, 1100, 500].reduce((time, gap) => {
-	setTimeout(() => {
-		subject.next(`${time}\t${gap}`)
-	}, time)
+pipe1.subscribe(i => console.log("[subject 1]", i))
+pipe2.subscribe(i => console.log("[subject 2]", i))
 
-	return time + gap
-}, 0);
+;[200, 800, 300, 220, 400, 900, 1050, 600, 1100, 500].reduce((time, gap) => {
+  setTimeout(() => {
+    subject.next(`${time}\t${gap}`)
+  }, time)
+
+  return time + gap
+}, 0)

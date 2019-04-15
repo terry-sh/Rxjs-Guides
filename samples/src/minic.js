@@ -2,51 +2,49 @@
  * 模仿 Observable 的簡單 JavaScript
  */
 
-function nop() { /** no-op function **/ }
-
-function Observable(obserableCreator) {
-
-	return {
-		subscribe(observer) {
-			return {
-				unsubscribe: obserableCreator(observer) || nop
-			}
-		}
-	}
-
+function nop() {
+  /** no-op function **/
 }
 
-const observable = Observable((observer) => {
-	let index = 0
+function Observable(obserableCreator) {
+  return {
+    subscribe(observer) {
+      return {
+        unsubscribe: obserableCreator(observer) || nop
+      }
+    }
+  }
+}
 
-	const timer = setInterval(() => {
-		observer.next(++index)
+const observable = Observable(observer => {
+  let index = 0
 
-		if (index >= 20) {
-			observer.complete()
-			clearInterval(timer)
-		}
+  const timer = setInterval(() => {
+    observer.next(++index)
 
-	}, 1000)
+    if (index >= 20) {
+      observer.complete()
+      clearInterval(timer)
+    }
+  }, 1000)
 
-	return () => {
-		clearInterval(timer)
-	}
-
+  return () => {
+    clearInterval(timer)
+  }
 })
 
 const subscription = observable.subscribe({
-	next(val) {
-		console.log(val)
-	},
-	error(err) {
-		//
-	},
-	complete() {
-		console.log('complete')
-	}
+  next(val) {
+    console.log(val)
+  },
+  error(err) {
+    //
+  },
+  complete() {
+    console.log("complete")
+  }
 })
 
 setTimeout(() => {
-	subscription.unsubscribe()
+  subscription.unsubscribe()
 }, 6000)

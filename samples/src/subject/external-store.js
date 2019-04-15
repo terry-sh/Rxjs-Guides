@@ -1,12 +1,5 @@
-const {
-  merge,
-  Subject
-} = require('rxjs')
-const {
-  scan,
-  share,
-  map
-} = require('rxjs/operators')
+const { merge, Subject } = require("rxjs")
+const { scan, share, map } = require("rxjs/operators")
 
 function initialState() {
   return {
@@ -16,10 +9,9 @@ function initialState() {
 }
 
 // RxJs 用作 store
-console.log('<TEST>:')
+console.log("<TEST>:")
 
 function UserStore() {
-
   function readonly(value) {
     return {
       enumerable: true,
@@ -30,31 +22,32 @@ function UserStore() {
 
   function createModule(reducer) {
     const subject = new Subject()
-    const action = subject.pipe(
-      map(reducer)
-    )
+    const action = subject.pipe(map(reducer))
 
-    const emit = (payload) => subject.next(payload)
+    const emit = payload => subject.next(payload)
     Object.defineProperties(emit, {
       subject: readonly(subject),
-      action: readonly(action),
+      action: readonly(action)
     })
 
     return emit
   }
 
-  const id = createModule(id => state => Object.assign({}, state, {
-    id
-  }))
-  const count = createModule(count => state => Object.assign({}, state, {
-    count
-  }))
+  const id = createModule(id => state =>
+    Object.assign({}, state, {
+      id
+    })
+  )
+  const count = createModule(count => state =>
+    Object.assign({}, state, {
+      count
+    })
+  )
 
-  const store = merge(id.action, count.action)
-    .pipe(
-      scan((state, reducer) => reducer(state), initialState()),
-      share()
-    )
+  const store = merge(id.action, count.action).pipe(
+    scan((state, reducer) => reducer(state), initialState()),
+    share()
+  )
 
   return {
     store,
@@ -68,7 +61,6 @@ function UserStore() {
 const userStore = UserStore()
 
 class Component {
-
   setState(state) {
     this.state = state
     this.render()
@@ -80,7 +72,6 @@ class Component {
 }
 
 class StoreComponent extends Component {
-
   constructor() {
     super()
     this.componentWillMount()
@@ -95,29 +86,27 @@ class StoreComponent extends Component {
   componentWillUnmount() {
     this.subscription.unsubscribe()
   }
-
 }
 
 class Header extends StoreComponent {
   render() {
-    console.log('<header />', this.state)
+    console.log("<header />", this.state)
   }
 }
 
 class Body extends StoreComponent {
   render() {
-    console.log('<body   />', this.state)
+    console.log("<body   />", this.state)
   }
 }
 
 class Footer extends StoreComponent {
   render() {
-    console.log('<footer />', this.state)
+    console.log("<footer />", this.state)
   }
 }
 
 class App extends Component {
-
   render() {
     let header = new Header()
     userStore.action.id(1)
@@ -136,7 +125,6 @@ class App extends Component {
 
     userStore.action.count(5)
   }
-
 }
 
 new App().render()
