@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Letter Game</title>
+    <!-- <script src="https://unpkg.com/rxjs/bundles/rxjs.umd.min.js"></script> -->
+    <script src="../node_modules/rxjs/bundles/rxjs.umd.min.js"></script>
+
+    <style>
+      #game-board {
+        width: 600px;
+        height: 360px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p>
+        Score: <span id="game-score">0</span>, Level:
+        <span id="game-level">0</span>
+      </p>
+    </header>
+    <canvas id="game-board"></canvas>
+    <footer class="hidden"></footer>
+
+    <script>
+      {
+        const dpi = window.devicePixelRatio
+
+        const { interval, fromEvent, combineLatest, BehaviorSubject } = rxjs
+        const { scan, startWith, map, takeWhile, switchMap } = rxjs.operators
+
+        const LetterA = "a".charCodeAt(0)
+        const LetterZ = "z".charCodeAt(0)
+        const randomLetter = () =>
+          String.fromCharCode(Math.random() * (LetterZ - LetterA) + LetterA)
+
+        const levelChangeThreshold = 20
+        const speedAdjust = 50
+        const endThreshold = 15
+        const gameWidth = 30
+        const canvasWidth = 1200
+        const canvasHeight = 1200
+        const fontSize = 14
+
+        const gameScore = document.getElementById("game-score")
+        const gameLevel = document.getElementById("game-level")
+        const gameBoard = document.getElementById("game-board")
+
+        const intervalSubject = new BehaviorSubject(600)
+
+        // fix canvas
+        {
+          const canvas = gameBoard
+          const style = getComputedStyle(canvas)
+          const dimen = name => +style.getPropertyValue(name).slice(0, -2)
+
+          canvas.setAttribute("width", dimen("width") * dpi)
+          canvas.setAttribute("height", dimen("height") * dpi)
+          canvas.getContext('2d').scale(dpi, dpi)
+        }
+
+        const newLetter = () => ({
+          letter: randomLetter(),
+          yPos: Math.floor(Math.random() * gameWidth)
+        })
+
+        const letters$ = intervalSubject.pipe(
+          switchMap(i =>
+            interval(i).pipe(
+              scan(
+                letters => ({
+                  intrvl: i,
+                  ltrs: [newLetter(), ...letters.ltrs]
+                }),
+                { ltrs: [], intrvl: 0 }
+              )
+            )
+          )
+        )
+
+        const keys$ = fromEvent(document, "keydown").pipe(
+          startWith({ key: "" }),
+          map(e => e.key)
+        )
+
+        const renderGame = state => {
+          gameScore.innerText = state.score
+          gameLevel.innerText = state.level
+
+          const size = fontSize
+          const paddingTop = size
+
+          const ctx = gameBoard.getContext("2d")
+          ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+          ctx.font = `${size}px monospace`
+
+          state.letters.forEach((l, i) => {
+            ctx.fillText(l.letter, l.yPos * size, paddingTop + i * (size * 1.5))
+          })
+        }
+
+        const renderGameOver = () => {
+          const ctx = gameBoard.getContext("2d")
+
+          const result = "GAME OVER!"
+          const bgSize = ctx.measureText(result)
+          const xPos = (canvasWidth + bgSize.width) / 2
+          const yPos = canvasHeight / 2
+      
+          ctx.fillStyle = "rgba(0, 0, 0, 0.8)"
+          ctx.fillRect(xPos, yPos - fontSize, bgSize.width, fontSize + 8)
+          ctx.fillStyle = "#fff"
+          ctx.fillText(result, xPos, yPos)
+        }
+
+        const noop = () => {}
+
+        const game$ = combineLatest(keys$, letters$).pipe(
+          scan(
+            (state, [key, letters]) => {
+              const isLastMatched =
+                letters.ltrs[letters.ltrs.length - 1] &&
+                letters.ltrs[letters.ltrs.length - 1].letter === key
+              if (isLastMatched) {
+                state.score = state.score + 1
+                letters.ltrs.pop()
+              }
+              if (state.score > 0 && state.score % levelChangeThreshold === 0) {
+                letters.ltrs = []
+                state.level = state.level + 1
+                state.score = state.score + 1
+                intervalSubject.next(letters.intrvl - speedAdjust)
+              }
+              return {
+                score: state.score,
+                letters: letters.ltrs,
+                level: state.level
+              }
+            },
+            { score: 0, letters: [], level: 1 }
+          ),
+          takeWhile(state => state.letters.length < endThreshold)
+        )
+
+        game$.subscribe(renderGame, noop, renderGameOver)
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>路径追踪</title>
+    <script src="../node_modules/rxjs/bundles/rxjs.umd.min.js"></script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #path {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="path"></canvas>
+    <script>
+      // 当前点和上一个点之间的直线距离之和
+      // 并画出路径
+      {
+        const { fromEvent, of } = rxjs
+        const { mergeScan, throttleTime, repeat } = rxjs.operators
+        const { skipUntil, takeUntil } = rxjs.operators
+
+        function distanceOf([x1, y1], [x2, y2]) {
+          return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
+        }
+
+        class Drawer {
+          constructor() {
+            const dpi = window.devicePixelRatio
+
+            const canvas = document.getElementById("path")
+            // fix canvas
+            const style = getComputedStyle(canvas)
+            const dimen = name => +style.getPropertyValue(name).slice(0, -2)
+            canvas.setAttribute("width", dimen("width") * dpi)
+            canvas.setAttribute("height", dimen("height") * dpi)
+
+            const ctx = canvas.getContext("2d")
+            ctx.scale(dpi, dpi)
+
+            this.canvas = canvas
+            this.ctx = ctx
+          }
+
+          clear() {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+          }
+
+          drawPoint(point, color) {
+            if (color) {
+              const oldStyle = this.ctx.fillStyle
+              this.ctx.fillStyle = color
+              this.ctx.fillRect(point[0] - 2, point[1] - 2, 4, 4)
+              this.ctx.fillStyle = oldStyle
+            } else {
+              this.ctx.fillRect(point[0] - 2, point[1] - 2, 4, 4)
+            }
+          }
+
+          drawPath(path) {
+            if (path.length <= 0) {
+              return
+            }
+            this.clear()
+            this.drawPoint(path[0])
+
+            const ctx = this.ctx
+            ctx.beginPath()
+            ctx.moveTo(path[0][0], path[0][1])
+            for (let i = 1; i < path.length; i++) {
+              const point = path[i]
+              this.drawPoint(point)
+              ctx.lineTo(point[0], point[1])
+            }
+            ctx.stroke()
+          }
+
+          drawDistance(distance) {
+            document.getElementById("distance").innerText = distance
+          }
+
+          draw(path) {
+            this.drawPath(path)
+          }
+        }
+
+        const drawer = new Drawer()
+
+        function createState() {
+          return []
+        }
+
+        function scanState(path, { clientX: x, clientY: y }) {
+          if (path.length === 0) {
+            return of([[x, y]])
+          }
+          const move = distanceOf([x, y], path[path.length - 1])
+          return of(move >= 4 ? [...path, [x, y]] : path)
+        }
+
+        const onStart = fromEvent(document, "mousedown")
+        const onEnd = fromEvent(document, "mouseup")
+        const onMove = fromEvent(document, "mousemove")
+        const onEmit = onMove.pipe(
+          throttleTime(50),
+          skipUntil(onStart),
+          takeUntil(onEnd)
+        )
+
+        function continuousDraw() {
+          // 没有repeat，只能画一次
+          onEmit
+            .pipe(repeat(), mergeScan(scanState, createState()))
+            .subscribe(path => {
+              drawer.draw(path)
+            })
+        }
+
+        function individualDraw() {
+          // 没有repeat，只能画一次
+          onEmit
+            .pipe(mergeScan(scanState, createState()), repeat())
+            .subscribe(path => {
+              drawer.draw(path)
+            })
+        }
+
+        continuousDraw()
+      }
+    </script>
+  </body>
+</html>
