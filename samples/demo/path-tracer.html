@@ -23,90 +23,31 @@
   </head>
   <body>
     <canvas id="path"></canvas>
+    <script src="./js/canvas.js"></script>
     <script>
-      // 当前点和上一个点之间的直线距离之和
-      // 并画出路径
+      // 画出路径
       {
+        const canvas = document.getElementById("path")
+        prepareCanvas(canvas)
+        function draw(path) {
+          drawPath(canvas, path)
+        }
+
         const { fromEvent, of } = rxjs
         const { mergeScan, throttleTime, repeat } = rxjs.operators
         const { skipUntil, takeUntil } = rxjs.operators
-
-        function distanceOf([x1, y1], [x2, y2]) {
-          return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
-        }
-
-        class Drawer {
-          constructor() {
-            const dpi = window.devicePixelRatio
-
-            const canvas = document.getElementById("path")
-            // fix canvas
-            const style = getComputedStyle(canvas)
-            const dimen = name => +style.getPropertyValue(name).slice(0, -2)
-            canvas.setAttribute("width", dimen("width") * dpi)
-            canvas.setAttribute("height", dimen("height") * dpi)
-
-            const ctx = canvas.getContext("2d")
-            ctx.scale(dpi, dpi)
-
-            this.canvas = canvas
-            this.ctx = ctx
-          }
-
-          clear() {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-          }
-
-          drawPoint(point, color) {
-            if (color) {
-              const oldStyle = this.ctx.fillStyle
-              this.ctx.fillStyle = color
-              this.ctx.fillRect(point[0] - 2, point[1] - 2, 4, 4)
-              this.ctx.fillStyle = oldStyle
-            } else {
-              this.ctx.fillRect(point[0] - 2, point[1] - 2, 4, 4)
-            }
-          }
-
-          drawPath(path) {
-            if (path.length <= 0) {
-              return
-            }
-            this.clear()
-            this.drawPoint(path[0])
-
-            const ctx = this.ctx
-            ctx.beginPath()
-            ctx.moveTo(path[0][0], path[0][1])
-            for (let i = 1; i < path.length; i++) {
-              const point = path[i]
-              this.drawPoint(point)
-              ctx.lineTo(point[0], point[1])
-            }
-            ctx.stroke()
-          }
-
-          drawDistance(distance) {
-            document.getElementById("distance").innerText = distance
-          }
-
-          draw(path) {
-            this.drawPath(path)
-          }
-        }
-
-        const drawer = new Drawer()
 
         function createState() {
           return []
         }
 
         function scanState(path, { clientX: x, clientY: y }) {
+          const pos = [x, y]
           if (path.length === 0) {
-            return of([[x, y]])
+            return of([pos])
           }
-          const move = distanceOf([x, y], path[path.length - 1])
-          return of(move >= 4 ? [...path, [x, y]] : path)
+          const move = distanceOf(pos, path[path.length - 1])
+          return of(move >= 4 ? [...path, pos] : path)
         }
 
         const onStart = fromEvent(document, "mousedown")
@@ -123,7 +64,7 @@
           onEmit
             .pipe(repeat(), mergeScan(scanState, createState()))
             .subscribe(path => {
-              drawer.draw(path)
+              draw(path)
             })
         }
 
@@ -132,7 +73,7 @@
           onEmit
             .pipe(mergeScan(scanState, createState()), repeat())
             .subscribe(path => {
-              drawer.draw(path)
+              draw(path)
             })
         }
 
