@@ -1,9 +1,14 @@
-var Rx = require('rxjs')
+const { of, empty } = require("rxjs")
+const { defaultIfEmpty } = require("rxjs/operators")
 
-Rx.Observable.empty().defaultIfEmpty('it is empty').subscribe(i => {
-	console.log(i) // it is empty
-})
+empty()
+  .pipe(defaultIfEmpty("it is empty"))
+  .subscribe(i => {
+    console.log(i) // it is empty
+  })
 
-Rx.Observable.of(1).defaultIfEmpty('it is empty').subscribe(i => {
-	console.log(i) // 1
-})
+of(1)
+  .pipe(defaultIfEmpty("it is empty"))
+  .subscribe(i => {
+    console.log(i) // 1
+  })

@@ -1,9 +1,14 @@
-const Rx = require("rxjs")
+const { empty, never } = require("rxjs")
+const { isEmpty } = require("rxjs/operators")
 
-Rx.Observable.empty().isEmpty().subscribe(cond => {
-	console.log('empty', cond)
-})
+empty()
+  .pipe(isEmpty())
+  .subscribe(cond => {
+    console.log("empty", cond)
+  })
 
-Rx.Observable.never().isEmpty().subscribe(cond => {
-	console.log('never', cond) // never logs!
-})
+never()
+  .pipe(isEmpty())
+  .subscribe(cond => {
+    console.log("never", cond) // never logs!
+  })
