@@ -1,12 +1,14 @@
-const Rx = require('rxjs')
+const { interval } = require("rxjs")
+const { take, map, mergeAll } = require("rxjs/operators")
 
-Rx.Observable
-.interval(200)
-.take(5)
-.map(i => Rx.Observable.interval(300).take(Math.floor(Math.random() * 9) + 1))
-.mergeAll()
-// or
-// .flatMap(i => i.reduce((g, e) => [...g, e], []))
-.subscribe(i => {
-	console.log(i)
-})
+interval(200)
+  .pipe(
+    take(5),
+    map(() => interval(300).pipe(take(3))),
+    // or
+    // .flatMap(i => i.reduce((g, e) => [...g, e], []))
+    mergeAll()
+  )
+  .subscribe(i => {
+    console.log(i)
+  })

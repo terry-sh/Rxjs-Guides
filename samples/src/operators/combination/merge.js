@@ -1,6 +1,15 @@
-const Rx = require('rxjs')
+const { interval, merge } = require("rxjs")
+const { take, map, delay } = require("rxjs/operators")
 
-const a = Rx.Observable.interval(200).take(12).map(i => `a ${i}`)
-const b = Rx.Observable.interval(300).take(8).delay(50).map(i => `b ${i}`)
+const a = interval(1100).pipe(
+  take(12),
+  map(i => `a ${i}`)
+)
 
-Rx.Observable.merge(a, b).subscribe(i => console.log(i))
+const b = interval(1700).pipe(
+  delay(1000),
+  take(8),
+  map(i => `b ${i}`)
+)
+
+merge(a, b).subscribe(i => console.log(i))

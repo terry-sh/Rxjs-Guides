@@ -1,10 +1,15 @@
-const Rx = require('rxjs')
+const { interval } = require("rxjs")
+const { take, map, withLatestFrom } = require("rxjs/operators")
 
-Rx.Observable
-.interval(300).take(12).map(i => 'source:' + i)
-.withLatestFrom(
-	Rx.Observable.interval(500).map(i => 'dest A:' + i),
-	Rx.Observable.interval(700).map(i => 'dest B:' + i),
-).subscribe(i => {
-	console.log(i)
-})
+interval(300)
+  .pipe(
+    take(12),
+    map(i => "source:" + i),
+    withLatestFrom(
+      interval(500).pipe(map(i => "dest A:" + i)),
+      interval(700).pipe(map(i => "dest B:" + i))
+    )
+  )
+  .subscribe(i => {
+    console.log(i)
+  })

@@ -1,32 +1,52 @@
-const Rx = require("rxjs")
-
-const id = Rx.Observable.of(1, 2, 3)
-const name = Rx.Observable.of('Han Meimei', 'Jim', 'Li Lei')
-const birthday = Rx.Observable.of('1995-03-10', '1994-11-15', '1993-07-19')
-
-Rx.Observable.zip(
-	id, name, birthday,
-	(id, name, birthday) => ({
-		id,
-		name,
-		birthday
-	})
-).subscribe(
-	student => {
-		console.log(`${student.id} / ${student.name} / ${student.birthday}`)
-	}
-)
+const { of, zip, interval, BehaviorSubject } = require("rxjs")
+const { delay, map, tap, filter } = require("rxjs/operators")
 
 {
-	// 模拟多个 Ajax获取数据合并
+  const id = of(1, 2, 3)
+  const name = of("Han Meimei", "Jim Green", "Li Lei")
+  const birthday = of("1995-03-10", "1994-11-15", "1993-07-19")
 
-	const o1 = Rx.Observable.of({ id: 10 }).delay(1000).do(() => { console.log('api one finished.') })
-	const o2 = Rx.Observable.of({ name: 'good user' }).delay(2000).do(() => { console.log('api two finished.') })
-	const o3 = Rx.Observable.of({ shoppingCart: [] }).delay(3000).do(() => { console.log('api three finished.') })
+  zip(id, name, birthday).subscribe(([id, name, birthday]) => {
+    console.log(`${id} \t ${name} \t ${birthday}`)
+  })
+}
 
-	const boundup = Rx.Observable
-		.zip(o1, o2, o3, (s1, s2, s3) => ({ ...s1, ...s2,	...s3 }))
-		.subscribe(state => {
-			console.log('now app is boostrapping with state: ', state)
-		})
+{
+  // 模拟多个 Ajax获取数据合并
+  const auth$ = new BehaviorSubject({ token: "###" })
+  const info$ = new BehaviorSubject({ id: 1, name: "lucky sweetie" })
+  const cart$ = new BehaviorSubject({ carts: ["book(1)## RxJs Guides"] })
+
+  function onEmit(o, i) {
+    return o.pipe(
+      delay(1000 * i),
+      filter(val => !!val),
+      tap(() => console.log(`api ${i} finished.`))
+    )
+  }
+
+  const o1 = onEmit(auth$, 1)
+  const o2 = onEmit(info$, 2)
+  const o3 = onEmit(cart$, 3)
+
+  const aggregate = (s1, s2, s3) => ({ ...s1, ...s2, ...s3 })
+  zip(o1, o2, o3, aggregate).subscribe(state => {
+    console.log("app runs with state = ", state)
+  })
+}
+
+{
+  const o1 = interval(3400).pipe(map(() => 1))
+  const o2 = interval(4600).pipe(map(() => 2))
+  const o3 = new BehaviorSubject(3);
+  // interval(2300).pipe(map(() => 3))
+
+  zip(o1, o2, o3).subscribe(value => {
+    console.log("zip", value)
+  })
+
+  setTimeout(() => {
+    o3.next(3.1)
+    o3.complete()
+  }, 6000)
 }
