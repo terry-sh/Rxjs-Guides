@@ -1,12 +1,12 @@
-const Rx = require('rxjs')
+const { bindCallback, Scheduler } = require('rxjs')
 
 // 使用異步的 `Scheduler`
 function someFun(cb) {
   cb();
 }
 
-const boundSyncFn = Rx.Observable.bindCallback(someFun)
-const boundAsyncFn = Rx.Observable.bindCallback(someFun, null, Rx.Scheduler.async)
+const boundSyncFn = bindCallback(someFun)
+const boundAsyncFn = bindCallback(someFun, null, Scheduler.async)
 
 boundSyncFn().subscribe(() => console.log('I was sync!'))
 boundAsyncFn().subscribe(() => console.log('I was async!'))

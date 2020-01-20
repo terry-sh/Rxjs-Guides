@@ -1,8 +1,13 @@
-const Rx = require('rxjs')
+const { empty } = require("rxjs")
+const { startWith } = require("rxjs/operators")
 
-const o = Rx.Observable.empty().startWith(8)
+const o = empty().pipe(startWith(8))
 o.subscribe(
-	i => { console.log(i) },
-	() => {},
-	() => { console.log('complete') }
+  i => {
+    console.log(i)
+  },
+  () => {},
+  () => {
+    console.log("complete")
+  }
 )
