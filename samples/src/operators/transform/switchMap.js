@@ -1,7 +1,11 @@
-const Rx = require('rxjs')
+const { interval } = require("rxjs")
+const { take, switchMap } = require("rxjs/operators")
 
-Rx.Observable.interval(1100).take(5)
-	.switchMap(i => Rx.Observable.interval(300).take(i + 1))
-	.subscribe(i => {
-		console.log(i)
-	})
+interval(1100)
+  .pipe(
+    take(5),
+    switchMap(i => interval(300).pipe(take(i + 1)))
+  )
+  .subscribe(i => {
+    console.log(i)
+  })

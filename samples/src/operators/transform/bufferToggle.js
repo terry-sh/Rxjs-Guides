@@ -1,29 +1,22 @@
-const Rx = require('rxjs')
+const { interval, timer, Observable } = require("rxjs")
+const { bufferToggle, take } = require("rxjs/operators")
 
-const event = Rx.Observable.interval(200).take(20)
+const mouseMove = interval(200).pipe(take(40))
 
-const o1 = Rx.Observable.create((observable) => {
-	const next = () => observable.next()
-	setTimeout(next, 100)
-	setTimeout(next, 210)
-	setTimeout(next, 610)
-	setTimeout(next, 710)
-	setTimeout(next, 1010)
+const mouseDown = Observable.create(observable => {
+  ;[210, 440, 900, 1810, 3630].forEach(duration =>
+    setTimeout(() => observable.next(duration), duration)
+  )
 
-	setTimeout(() => observable.complete(), 1200)
+  setTimeout(() => observable.complete(), 8000)
 })
 
-const o2 = Rx.Observable.create((observable) => {
-	const next = () => observable.next()
-	setTimeout(next, 500)
-	setTimeout(next, 900)
-	setTimeout(next, 1100)
+const mouseUp = time => {
+  return timer(Math.min(time, 900))
+}
 
-	setTimeout(() => observable.complete(), 1300)
-})
-
-event.buffer(o1, o2).subscribe(i => {
-	console.log(i)
+mouseMove.pipe(bufferToggle(mouseDown, mouseUp)).subscribe(i => {
+  console.log(i)
 })
 
 // 0 1 2 3 4 5 6 7 8 9 10

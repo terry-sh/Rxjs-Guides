@@ -1,8 +1,8 @@
-const Rx = require('rxjs')
+const { of } = require("rxjs")
+const { pluck } = require("rxjs/operators")
 
-const event = Rx.Observable
-.of({x: 1}, {x: 2})
-.pluck('x')
-.subscribe(i => {
-	console.log(i)
-})
+of({ x: 1 }, { x: 2 })
+  .pipe(pluck("x"))
+  .subscribe(i => {
+    console.log(i)
+  })

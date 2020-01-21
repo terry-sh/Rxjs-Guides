@@ -1,13 +1,9 @@
-const Rx = require('rxjs')
+const { interval, range } = require("rxjs")
+const { mergeScan, take } = require("rxjs/operators")
 
-Rx.Observable
-	.interval(100)
-	.take(5)
-	.mergeScan(
-		(acc, one) => {
-			acc += one
-			return Rx.Observable.range(acc, one)
-		},
-		0
-	)
-	.subscribe(x => console.log(x))
+interval(100)
+  .pipe(
+    take(5),
+    mergeScan((acc, one) => range((acc += one), one), 0)
+  )
+  .subscribe(x => console.log(x))

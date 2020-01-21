@@ -1,8 +1,14 @@
-const Rx = require('rxjs')
+const { interval } = require("rxjs")
+const { concatMapTo, take, map } = require("rxjs/operators")
 
-const source = Rx.Observable.interval(100).take(5)
+const source = interval(100).pipe(take(5))
 
-const mix = source.concatMapTo(
-	Rx.Observable.interval(80).take(4).map(i => ['a', 'b', 'c'][i%3])
+const mix = source.pipe(
+  concatMapTo(
+    interval(80).pipe(
+      take(4),
+      map(i => ["a", "b", "c"][i % 3])
+    )
+  )
 )
 mix.subscribe(x => console.log(x))

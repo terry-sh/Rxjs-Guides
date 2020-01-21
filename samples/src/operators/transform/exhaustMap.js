@@ -1,8 +1,9 @@
-const Rx = require('rxjs')
+const { interval } = require("rxjs")
+const { exhaustMap, take, mapTo } = require("rxjs/operators")
 
-Rx.Observable
-	.interval(1000)
-	.take(10).exhaustMap(
-		i => Rx.Observable.interval(i * 120).take(i).mapTo(i)
-	)
-	.subscribe(x => console.log(x))
+interval(1000)
+  .pipe(
+    take(10),
+    exhaustMap(i => interval(i * 120).pipe(take(i), mapTo(i)))
+  )
+  .subscribe(x => console.log(x))

@@ -1,9 +1,7 @@
-const Rx = require('rxjs')
+const { range } = require("rxjs")
+const { partition } = require("rxjs/operators")
 
-const partitions = Rx.Observable.range(1, 20).partition(i => i % 2 === 0)
+const [evenNumber, oddNumber] = range(1, 20).pipe(partition(i => i % 2 === 0))
 
-const evenNumber = partitions[0]
-const oddNumber = partitions[1]
-
-evenNumber.subscribe(i => console.log('even', i))
-oddNumber.subscribe(i => console.log('odd', i))
+evenNumber.subscribe(i => console.log("even", i))
+oddNumber.subscribe(i => console.log("odd", i))

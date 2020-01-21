@@ -1,9 +1,12 @@
+const { interval } = require("rxjs")
+const { window, flatMap, take, reduce } = require("rxjs/operators")
 
-const Rx = require('rxjs')
-
-Rx.Observable.interval(100).take(20)
-.window(Rx.Observable.interval(230))
-.flatMap(group => group.reduce((list, e) => [...list, e], []))
-.subscribe(i => {
-	console.log(i)
-})
+interval(100)
+  .pipe(
+    take(20),
+    window(interval(230)),
+    flatMap(group => group.pipe(reduce((list, e) => [...list, e], [])))
+  )
+  .subscribe(i => {
+    console.log(i)
+  })

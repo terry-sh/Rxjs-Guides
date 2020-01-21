@@ -1,8 +1,8 @@
-const Rx = require('rxjs')
+const { of } = require("rxjs")
+const { mapTo } = require("rxjs/operators")
 
-Rx.Observable
-	.of(1, 2, 3)
-	.mapTo('x')
-	.subscribe(i => {
-		console.log(i)
-	})
+of(1, 2, 3)
+  .pipe(mapTo("x"))
+  .subscribe(i => {
+    console.log(i)
+  })
