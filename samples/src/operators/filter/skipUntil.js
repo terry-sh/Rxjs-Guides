@@ -1,6 +1,9 @@
-const Rx = require('rxjs')
+const { interval, of } = require("rxjs")
+const { skipUntil, delay, take } = require("rxjs/operators")
 
-Rx.Observable.interval(1000).skipUntil(Rx.Observable.of(1).delay(3000)).take(10).subscribe(i => {
-	console.log('take', i)
-})
+interval(1000)
+  .pipe(skipUntil(of(1).pipe(delay(3000)), take(10)))
+  .subscribe(i => {
+    console.log("take", i)
+  })
 // 輸出： 2 - 11

@@ -1,16 +1,15 @@
-const Rx = require('rxjs')
+const { empty, of, Observable } = require("rxjs")
+const { first, catchError } = require("rxjs/operators")
 
-try {
-	Rx.Observable.empty().first().subscribe(i => {
-		console.log('first')
-	})
-} catch(error) {
-	// exception
-	console.log('no first element')
-}
+empty()
+  .pipe(
+    first(),
+    catchError(() => of(1))
+  )
+  .subscribe(i => {
+    console.log("first", i)
+  })
 
-Rx.Observable.create(obs => {
-	obs.next(1)
-}).first().subscribe(i => {
-	console.log('first', i)
+new Observable(obs => obs.next(1)).pipe(first()).subscribe(i => {
+  console.log("first", i)
 })

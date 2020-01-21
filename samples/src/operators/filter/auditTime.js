@@ -1,20 +1,12 @@
-const {
-  interval
-} = require('rxjs')
-const {
-  take,
-  auditTime
-} = require('rxjs/operators')
+const { interval } = require("rxjs")
+const { take, auditTime } = require("rxjs/operators")
 
 interval(100)
-  .pipe(
-    take(10),
-    auditTime(120)
-  )
+  .pipe(take(10), auditTime(120))
   .subscribe(
     i => console.log(i),
     err => {},
-    () => console.log('complete')
+    () => console.log("complete")
   )
 
 //|- 0  -  1  -  2  -  3  - 4  -  5  -  6  -  7  -  8 -  9 -|

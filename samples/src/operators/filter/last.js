@@ -1,19 +1,22 @@
-const Rx = require('rxjs')
+const { empty, of, Observable } = require("rxjs")
+const { last, catchError } = require("rxjs/operators")
 
-try {
-	Rx.Observable.empty().last().subscribe(i => {
-		console.log('last')
-	})
-} catch(error) {
-	// exception
-	console.log('no last element')
-}
+empty()
+.pipe(
+  last(),
+  catchError(err => of('no exist.'))
+)
+.subscribe(i => {
+  console.log("last", i)
+})
 
-Rx.Observable.create(obs => {
-	obs.next(1)
-	obs.next(2)
-	// 如果沒有 complete，則不會觸發
-	obs.complete()
-}).last().subscribe(i => {
-	console.log('last', i)
+const stream = new Observable(obs => {
+  obs.next(1)
+  obs.next(2)
+  // 如果沒有 complete，則不會觸發
+  obs.complete()
+})
+
+stream.pipe(last()).subscribe(i => {
+  console.log("last", i)
 })

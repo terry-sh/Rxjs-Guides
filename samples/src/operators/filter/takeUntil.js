@@ -1,7 +1,10 @@
-const Rx = require('rxjs')
+const { interval, timer } = require("rxjs")
+const { takeUntil } = require("rxjs/operators")
 
-const i = Math.random() * 2000
+const DELAY = Math.max(300, Math.random() * 2000)
 
-Rx.Observable.interval(100).takeUntil(Rx.Observable.of(1).delay(i)).subscribe(i => {
-	console.log('take', i)
-})
+interval(200)
+  .pipe(takeUntil(timer(DELAY)))
+  .subscribe(i => {
+    console.log("take", i)
+  })

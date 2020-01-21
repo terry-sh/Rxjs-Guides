@@ -4,17 +4,17 @@ const { debounce } = require("rxjs/operators")
 function timerOf(timeList) {
   const timeSeries = timeList.reduce(
     ({ acc, list }, cur) => {
-      list.push(acc += cur)
+      list.push((acc += cur))
       return { acc, list }
     },
     { list: [], acc: 0 }
   ).list
-  console.log("time series", timeSeries);
+  console.log("time series", timeSeries)
 
   return Observable.create(stream => {
     let i = 0
     let timer = null
-  
+
     function setTimer() {
       clearTimeout(timer)
       timer = setTimeout(() => {
